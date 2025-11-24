@@ -1,0 +1,24 @@
+# Flutter/Dart/Pub
+.dart_tool/
+.packages
+pubspec.lock
+**/generated_plugin_registrant.dart
+
+# Build outputs
+/build/
+/ios/Pods/
+/android/.gradle/
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# macOS
+**/.DS_Store
+
+# Tests artifacts
+coverage/

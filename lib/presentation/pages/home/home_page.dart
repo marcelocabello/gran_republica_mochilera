@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../domain/entities/destino_entity.dart';
 import '../../../domain/usecases/get_destinos_usecase.dart';
+import '../../providers/libreta_provider.dart';
 import '../../widgets/app_bar_custom.dart';
 import '../../widgets/card_item.dart';
 import '../../widgets/common_button.dart';
@@ -53,6 +54,8 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 16),
                 _buildCarousel(destinos, colors),
                 const SizedBox(height: 12),
+                _buildStorePreview(colors),
+                const SizedBox(height: 12),
                 _buildDestinosSection(destinos),
               ],
             ),
@@ -100,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Explora rutas naturales, cultura y aventuras en un solo lugar.',
+                  'Explora la Sierra Gorda queretana entre misiones, cascadas, miradores y rutas serranas.',
                   style: TextStyle(
                     color: colors.onPrimaryContainer.withOpacity(0.9),
                   ),
@@ -168,15 +171,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(18),
-                  child: Image.network(
-                    destino.imagen,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    errorBuilder: (_, __, ___) => Container(
-                      color: colors.surfaceVariant,
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.image_not_supported_outlined),
-                    ),
+                  child: DestinationImage(
+                    imageUrl: destino.imagen,
+                    title: destino.nombre,
                   ),
                 ),
                 Positioned(
@@ -207,6 +204,14 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.white70,
                           ),
                         ),
+                        const SizedBox(height: 4),
+                        Text(
+                          destino.municipio,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -223,6 +228,43 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildStorePreview(ColorScheme colors) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Tienda y canjes',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Tus cupones también sirven para comida regional, refrescos, recuerdos y descuentos locales.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: colors.onSurfaceVariant,
+                  ),
+            ),
+            const SizedBox(height: 14),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: const [
+                _StoreChip(label: 'Gorditas serranas', icon: Icons.lunch_dining_outlined),
+                _StoreChip(label: 'Refrescos y bebidas', icon: Icons.local_drink_outlined),
+                _StoreChip(label: 'Café de olla', icon: Icons.local_cafe_outlined),
+                _StoreChip(label: 'Artesanías y postales', icon: Icons.shopping_bag_outlined),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -248,7 +290,8 @@ class _HomePageState extends State<HomePage> {
         ...destinos.map(
           (destino) => CardItem(
             title: destino.nombre,
-            subtitle: destino.region,
+            subtitle: '${destino.municipio} • ${destino.region}',
+            badge: destino.categoria,
             imageUrl: destino.imagen,
             onTap: () => _showDestinoDetalle(destino),
           ),
@@ -272,15 +315,86 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showDestinoDetalle(DestinoEntity destino) {
+    final libreta = context.read<LibretaProvider>();
     showDialog<void>(
       context: context,
       builder: (_) => AlertDialog(
         title: Text(destino.nombre),
-        content: Text(destino.descripcion),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${destino.municipio} • ${destino.categoria}',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            const SizedBox(height: 8),
+            Text(destino.descripcion),
+            const SizedBox(height: 12),
+            Text(
+              'Cupon desbloqueable: ${destino.recompensaSello}',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+          ],
+        ),
         actions: [
+          TextButton.icon(
+            onPressed: () {
+              libreta.alternarSello(destino.nombre);
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    libreta.tieneSello(destino.nombre)
+                        ? 'Sello agregado a la libreta'
+                        : 'Sello retirado de la libreta',
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.local_activity_outlined),
+            label: Text(
+              libreta.tieneSello(destino.nombre) ? 'Quitar sello' : 'Sellar visita',
+            ),
+          ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Cerrar'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StoreChip extends StatelessWidget {
+  const _StoreChip({
+    required this.label,
+    required this.icon,
+  });
+
+  final String label;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: colors.secondaryContainer.withValues(alpha: 0.45),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: colors.secondary),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.w700),
           ),
         ],
       ),

@@ -10,39 +10,82 @@ class DestinoRepositoryMock implements IDestinoRepository {
     await Future<void>.delayed(const Duration(milliseconds: 300));
     return const [
       DestinoEntity(
-        nombre: 'Lago Escondido',
-        region: 'Patagonia',
+        nombre: 'Mision de Jalpan',
+        region: 'Sierra Gorda Queretana',
+        municipio: 'Jalpan de Serra',
+        categoria: 'Patrimonio',
         imagen:
-            'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80',
-        descripcion: 'Bosques eternos y aguas cristalinas para explorar.',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Misi%C3%B3n_Jalpan%2C_Sierra_Gorda.jpg/1200px-Misi%C3%B3n_Jalpan%2C_Sierra_Gorda.jpg',
+        descripcion:
+            'La mision franciscana mas emblemática de la Sierra Gorda, punto ideal para comenzar la ruta cultural.',
+        latitud: 21.2185,
+        longitud: -99.4726,
+        recompensaSello: 'Cafe de olla + postal conmemorativa',
       ),
       DestinoEntity(
-        nombre: 'Isla Verde',
-        region: 'Caribe',
+        nombre: 'Rio Escanela y Puente de Dios',
+        region: 'Sierra Gorda Queretana',
+        municipio: 'Pinal de Amoles',
+        categoria: 'Naturaleza',
         imagen:
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-        descripcion: 'Playas tranquilas y arenas doradas para desconectar.',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/R%C3%ADo_Escanela%2C_Puente_De_Dios.jpg/1200px-R%C3%ADo_Escanela%2C_Puente_De_Dios.jpg',
+        descripcion:
+            'Sendero de agua turquesa, pozas y un puente natural entre paredones de roca.',
+        latitud: 21.1322,
+        longitud: -99.6257,
+        recompensaSello: 'Descuento en tour de senderismo',
       ),
       DestinoEntity(
-        nombre: 'Picos del Sur',
-        region: 'Cordillera Andina',
+        nombre: 'Mirador Cuatro Palos',
+        region: 'Sierra Gorda Queretana',
+        municipio: 'Pinal de Amoles',
+        categoria: 'Mirador',
         imagen:
-            'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
-        descripcion: 'Senderos de altura y vistas infinitas de montaña.',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Mirador_Cuatro_Palos%2C_Pinal_de_Amoles%2C_Quer%C3%A9taro%2C_M%C3%A9xico.jpg/1200px-Mirador_Cuatro_Palos%2C_Pinal_de_Amoles%2C_Quer%C3%A9taro%2C_M%C3%A9xico.jpg',
+        descripcion:
+            'Mirador de alta montaña con niebla baja, amaneceres dramáticos y panorámica de la sierra.',
+        latitud: 21.1904,
+        longitud: -99.6811,
+        recompensaSello: 'Sticker de ruta de altura',
       ),
       DestinoEntity(
-        nombre: 'Ruta de los Cafetales',
-        region: 'Eje Cafetero',
+        nombre: 'Cascada El Chuveje',
+        region: 'Sierra Gorda Queretana',
+        municipio: 'Pinal de Amoles',
+        categoria: 'Cascadas',
         imagen:
-            'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=1200&q=80',
-        descripcion: 'Aromas, paisajes y cultura cafetera en cada rincón.',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Cascada_El_Chuveje_-_Pinal_de_Amoles%2C_Quer%C3%A9taro.jpg/1200px-Cascada_El_Chuveje_-_Pinal_de_Amoles%2C_Quer%C3%A9taro.jpg',
+        descripcion:
+            'Caida de agua rodeada por bosque y cañadas, muy visitada para picnic y foto de aventura.',
+        latitud: 21.1358,
+        longitud: -99.6172,
+        recompensaSello: 'Cupon para bebida artesanal',
       ),
       DestinoEntity(
-        nombre: 'Ciudad Patrimonio',
-        region: 'Centro Histórico',
+        nombre: 'Sotano del Barro',
+        region: 'Sierra Gorda Queretana',
+        municipio: 'Arroyo Seco',
+        categoria: 'Aventura',
         imagen:
-            'https://images.unsplash.com/photo-1505764706515-aa95265c5abc?auto=format&fit=crop&w=1200&q=80',
-        descripcion: 'Calles coloniales y museos vivos llenos de historia.',
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/S%C3%B3tano_del_Barro.jpg/1200px-S%C3%B3tano_del_Barro.jpg',
+        descripcion:
+            'Uno de los abismos mas impresionantes de Mexico, famoso por aves y expediciones de observación.',
+        latitud: 21.5142,
+        longitud: -99.4211,
+        recompensaSello: 'Pase 2x1 en experiencia guiada',
+      ),
+      DestinoEntity(
+        nombre: 'Mision de Landa',
+        region: 'Sierra Gorda Queretana',
+        municipio: 'Landa de Matamoros',
+        categoria: 'Patrimonio',
+        imagen:
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Misi%C3%B3n_de_Landa_de_Matamoros_11.jpg/1200px-Misi%C3%B3n_de_Landa_de_Matamoros_11.jpg',
+        descripcion:
+            'Fachada barroca serrana y centro histórico pequeño, ideal para turismo cultural en ruta.',
+        latitud: 21.1821,
+        longitud: -99.3186,
+        recompensaSello: 'Sello dorado de mision franciscana',
       ),
     ];
   }

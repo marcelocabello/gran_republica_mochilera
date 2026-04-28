@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../domain/entities/destino_entity.dart';
 import '../../../domain/usecases/get_destinos_usecase.dart';
+import '../../providers/libreta_provider.dart';
 import '../../widgets/app_bar_custom.dart';
 import '../../widgets/card_item.dart';
 
@@ -40,7 +41,8 @@ class _DestinosPageState extends State<DestinosPage> {
               final destino = destinos[index];
               return CardItem(
                 title: destino.nombre,
-                subtitle: destino.region,
+                subtitle: '${destino.municipio} • ${destino.region}',
+                badge: destino.categoria,
                 imageUrl: destino.imagen,
                 onTap: () => _showDetalle(destino),
               );
@@ -52,6 +54,7 @@ class _DestinosPageState extends State<DestinosPage> {
   }
 
   void _showDetalle(DestinoEntity destino) {
+    final libreta = context.read<LibretaProvider>();
     showDialog<void>(
       context: context,
       builder: (_) => AlertDialog(
@@ -60,12 +63,46 @@ class _DestinosPageState extends State<DestinosPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(destino.region, style: Theme.of(context).textTheme.labelLarge),
+            Text(
+              '${destino.municipio} • ${destino.categoria}',
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
             const SizedBox(height: 8),
             Text(destino.descripcion),
+            const SizedBox(height: 12),
+            Text(
+              'Coordenadas: ${destino.latitud.toStringAsFixed(4)}, ${destino.longitud.toStringAsFixed(4)}',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Cupon: ${destino.recompensaSello}',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
           ],
         ),
         actions: [
+          TextButton.icon(
+            onPressed: () {
+              libreta.alternarSello(destino.nombre);
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    libreta.tieneSello(destino.nombre)
+                        ? 'Sello agregado a la libreta'
+                        : 'Sello retirado de la libreta',
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.check_circle_outline),
+            label: Text(
+              libreta.tieneSello(destino.nombre) ? 'Quitar sello' : 'Agregar sello',
+            ),
+          ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Cerrar'),

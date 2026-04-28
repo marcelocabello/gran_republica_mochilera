@@ -32,7 +32,7 @@ class AppRoutes {
               GoRoute(
                 path: '/categorias',
                 name: 'categorias',
-                builder: (context, state) => const CategoriasPage(),
+                builder: (context, state) => const TiendaPage(),
               ),
             ],
           ),
@@ -95,10 +95,10 @@ class _NavigationShellScaffold extends StatelessWidget {
         onDestinationSelected: _onDestinationSelected,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Inicio'),
-          NavigationDestination(icon: Icon(Icons.category_outlined), label: 'Categorías'),
+          NavigationDestination(icon: Icon(Icons.storefront_outlined), label: 'Tienda'),
           NavigationDestination(icon: Icon(Icons.landscape_outlined), label: 'Destinos'),
           NavigationDestination(icon: Icon(Icons.map_outlined), label: 'Mapa'),
-          NavigationDestination(icon: Icon(Icons.person_outline), label: 'Perfil'),
+          NavigationDestination(icon: Icon(Icons.book_outlined), label: 'Libreta'),
         ],
         height: 72,
         backgroundColor: colors.surface.withOpacity(0.92),

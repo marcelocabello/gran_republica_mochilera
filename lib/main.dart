@@ -5,6 +5,7 @@ import 'app/my_app.dart';
 import 'app/theme.dart';
 import 'data/repositories/destino_repository.dart';
 import 'domain/usecases/get_destinos_usecase.dart';
+import 'presentation/providers/community_provider.dart';
 import 'presentation/providers/libreta_provider.dart';
 
 void main() {
@@ -14,6 +15,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LibretaProvider()),
+        ChangeNotifierProvider(create: (_) => CommunityProvider()),
         Provider<IDestinoRepository>(create: (_) => DestinoRepositoryMock()),
         ProxyProvider<IDestinoRepository, GetDestinosUseCase>(
           update: (_, repository, __) => GetDestinosUseCase(repository),

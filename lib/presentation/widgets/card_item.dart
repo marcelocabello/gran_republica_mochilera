@@ -90,10 +90,12 @@ class DestinationImage extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.title,
+    this.subtitle = 'Foto no disponible por red externa',
   });
 
   final String imageUrl;
   final String title;
+  final String subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +115,7 @@ class DestinationImage extends StatelessWidget {
       },
       errorBuilder: (_, __, ___) => _DestinationFallback(
         title: title,
-        subtitle: 'Foto no disponible por red externa',
+        subtitle: subtitle,
         icon: Icons.image_not_supported_outlined,
         color: colors.tertiary,
       ),

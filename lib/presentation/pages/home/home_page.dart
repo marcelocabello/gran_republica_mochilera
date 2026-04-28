@@ -71,8 +71,8 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            colors.primaryContainer.withOpacity(0.95),
-            colors.tertiaryContainer.withOpacity(0.85),
+            colors.primaryContainer.withValues(alpha: 0.95),
+            colors.tertiaryContainer.withValues(alpha: 0.85),
           ],
         ),
         borderRadius: BorderRadius.circular(18),
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   'Explora la Sierra Gorda queretana entre misiones, cascadas, miradores y rutas serranas.',
                   style: TextStyle(
-                    color: colors.onPrimaryContainer.withOpacity(0.9),
+                    color: colors.onPrimaryContainer.withValues(alpha: 0.9),
                   ),
                 ),
               ),
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
       return Container(
         height: 200,
         decoration: BoxDecoration(
-          color: colors.surfaceVariant,
+          color: colors.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(18),
         ),
         alignment: Alignment.center,
@@ -252,10 +252,10 @@ class _HomePageState extends State<HomePage> {
                   ),
             ),
             const SizedBox(height: 14),
-            Wrap(
+            const Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: const [
+              children: [
                 _StoreChip(label: 'Gorditas serranas', icon: Icons.lunch_dining_outlined),
                 _StoreChip(label: 'Refrescos y bebidas', icon: Icons.local_drink_outlined),
                 _StoreChip(label: 'Café de olla', icon: Icons.local_cafe_outlined),

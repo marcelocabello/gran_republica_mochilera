@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../presentation/pages/comunidad/comunidad_page.dart';
 import '../presentation/pages/categorias/categorias_page.dart';
 import '../presentation/pages/destinos/destinos_page.dart';
 import '../presentation/pages/home/home_page.dart';
@@ -33,6 +34,15 @@ class AppRoutes {
                 path: '/categorias',
                 name: 'categorias',
                 builder: (context, state) => const TiendaPage(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/comunidad',
+                name: 'comunidad',
+                builder: (context, state) => const ComunidadPage(),
               ),
             ],
           ),
@@ -96,12 +106,13 @@ class _NavigationShellScaffold extends StatelessWidget {
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Inicio'),
           NavigationDestination(icon: Icon(Icons.storefront_outlined), label: 'Tienda'),
+          NavigationDestination(icon: Icon(Icons.camera_alt_outlined), label: 'Comunidad'),
           NavigationDestination(icon: Icon(Icons.landscape_outlined), label: 'Destinos'),
           NavigationDestination(icon: Icon(Icons.map_outlined), label: 'Mapa'),
           NavigationDestination(icon: Icon(Icons.book_outlined), label: 'Libreta'),
         ],
         height: 72,
-        backgroundColor: colors.surface.withOpacity(0.92),
+        backgroundColor: colors.surface.withValues(alpha: 0.92),
         elevation: 4,
       ),
     );
